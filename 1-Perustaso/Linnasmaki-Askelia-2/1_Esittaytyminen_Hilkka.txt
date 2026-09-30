@@ -1,0 +1,13 @@
+Transkripti: 1_Esittaytyminen_Hilkka.mp3 (kesto 00:30)
+Tehty automaattisesti Whisper-mallilla (mlx-community/whisper-large-v3-turbo). Voi sisältää virheitä.
+
+--- Teksti ---
+Olen Hilkka Ollikainen ja työskentelen opintotoimistossa. Olen 61-vuotias ja asun Härkämäessä. Perheeseeni kuuluu aviopuolison lisäksi kolme lasta, aikuisia kaikki ja kuusi lasten lasta. Asun kerrostalossa. Työni on toimistotyötä ja harrastuksenani on mökkeily ja puutarhatyöt. Kiitos.
+
+--- Aikaleimat ---
+[00:03] Olen Hilkka Ollikainen ja työskentelen opintotoimistossa.
+[00:08] Olen 61-vuotias ja asun Härkämäessä.
+[00:12] Perheeseeni kuuluu aviopuolison lisäksi kolme lasta, aikuisia kaikki ja kuusi lasten lasta.
+[00:20] Asun kerrostalossa.
+[00:23] Työni on toimistotyötä ja harrastuksenani on mökkeily ja puutarhatyöt.
+[00:30] Kiitos.

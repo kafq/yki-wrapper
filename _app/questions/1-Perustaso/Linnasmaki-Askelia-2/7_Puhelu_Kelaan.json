@@ -1,0 +1,130 @@
+{
+ "title": "",
+ "intro": "Tehtävä 1: Oikein vai väärin\nOikein vai väärin?\n\nTehtävä 2: Avoimet kysymykset\nKuuntele ja vastaa kysymyksiin.",
+ "questions": [
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.1",
+   "text": "Mikko Helminen soittaa, koska hän haluaa kysyä asumistuesta.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.2",
+   "text": "Mikko Helminen on muuttanut uuteen asuntoon.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.3",
+   "text": "Vuokra laski 100 euroa.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.4",
+   "text": "Mikko Helminen on saanut yleistä asumistukea.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.5",
+   "text": "Muuttotilanteessa täytyy mennä Kelaan.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.6",
+   "text": "Mikko Helminen ei osaa käyttää nettiä.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.7",
+   "text": "Mikko Helminen voi soittaa uudestaan Kelaan, jos hän tarvitsee apua.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.1",
+   "text": "Miksi Mikko Helminen soittaa Kelaan?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.2",
+   "text": "Kuinka paljon hänen vuokransa on noussut?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.3",
+   "text": "Vaikuttaako vuokrannousu virkailijan mielestä asumistukeen?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.4",
+   "text": "Miten Mikko Helminen voi tehdä tarkistuksen? (2 eri tapaa)",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.5",
+   "text": "Miten netin asiointipalveluun pääsee kirjautumaan?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.6",
+   "text": "Mitä Mikon täytyy tehdä, jos hän tarvitsee apua?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  }
+ ]
+}

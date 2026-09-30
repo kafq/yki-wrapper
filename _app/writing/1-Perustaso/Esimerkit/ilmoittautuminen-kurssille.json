@@ -1,0 +1,18 @@
+{
+ "title": "Ilmoittautuminen kielikurssille",
+ "kind": "virallinen viesti",
+ "task": "Haluat mennä suomen kielen kurssille kansalaisopistoon. Kirjoita sähköposti kurssin opettajalle. Kerro\n- kuka olet\n- miksi haluat osallistua kurssille\n- milloin sinulla on aikaa\nKysy myös, paljonko kurssi maksaa.",
+ "length": "40–60 sanaa",
+ "minWords": 40,
+ "maxWords": 60,
+ "images": [],
+ "models": [
+  {
+   "level": "",
+   "text": "Hyvä opettaja,\n\nnimeni on Li Wei, ja asun Tampereella. Haluaisin ilmoittautua suomen kielen kurssille. Olen asunut Suomessa vuoden, ja tarvitsen suomea työssäni. Olen käynyt jo yhden alkeiskurssin. Minulla on aikaa arki-iltaisin maanantaista torstaihin. Voisitteko kertoa, paljonko kurssi maksaa?\n\nYstävällisin terveisin\nLi Wei",
+   "comment": "Written for this repo as an example. Not an official YKI rating."
+  }
+ ],
+ "source": "",
+ "sourceName": "Original examples (this repo)"
+}

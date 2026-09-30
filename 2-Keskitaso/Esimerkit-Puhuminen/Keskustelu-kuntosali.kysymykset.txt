@@ -1,0 +1,22 @@
+Keskustelu: kuntosali
+Lähde: YKI wrapper, alkuperäinen esimerkkitehtävä (tekstistä puheeksi).
+
+Haluat liittyä kuntosalin jäseneksi. Soitat kuntosalin asiakaspalveluun. Kuulet asiakaspalvelijan puheenvuorot. Vastaa jokaisen puheenvuoron jälkeen, kun kuulet äänimerkin. Vihje ja puheaika ovat sulkeissa.
+
+Mikko: ***** SINÄ: [Esittele itsesi ja kerro asiasi.] (20 s)
+   Esimerkkivastaus: Hei, täällä on Sara Ahmed. Haluaisin liittyä kuntosalinne jäseneksi. Voisitteko kertoa jäsenyyksistä?
+
+Mikko: ***** SINÄ: [Valitse vaihtoehto ja perustele.] (20 s)
+   Esimerkkivastaus: Minua kiinnostaa vuosijäsenyys, koska aion käydä salilla säännöllisesti koko vuoden. Se on varmaan myös edullisempi.
+
+Mikko: ***** SINÄ: [Vastaa.] (20 s)
+   Esimerkkivastaus: Olen käynyt kuntosalilla joskus aiemmin, mutta siitä on jo aikaa. Olisi kiva, jos joku näyttäisi, miten laitteita käytetään.
+
+Mikko: ***** SINÄ: [Kysy jotakin ryhmäliikunnasta.] (20 s)
+   Esimerkkivastaus: Kyllä, kiitos. Mihin aikaan joogatunnit ovat, ja pitääkö niille ilmoittautua etukäteen?
+
+Mikko: ***** SINÄ: [Ehdota aikaa.] (15 s)
+   Esimerkkivastaus: Sopisiko huomenna kello viisi iltapäivällä? Tulen suoraan töistä.
+
+Mikko: ***** SINÄ: [Kiitä ja lopeta puhelu.] (10 s)
+   Esimerkkivastaus: Kiitos paljon avusta! Nähdään huomenna. Hei hei!

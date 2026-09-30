@@ -1,0 +1,16 @@
+Tilanteet
+Lähde: YKI wrapper, alkuperäinen esimerkkitehtävä (tekstistä puheeksi).
+
+Kuulet neljä tilannetta. Reagoi jokaiseen tilanteeseen ääneen. Kun kuulet äänimerkin, aloita puhuminen. Sinulla on aikaa 15 sekuntia. Vertaa sitten omaa vastaustasi esimerkkivastaukseen.
+
+Tilanne 1. Olet kaupassa. Et löydä maitoa. Kysy myyjältä apua. (15 s)
+   Esimerkkivastaus: Anteeksi, voisitteko auttaa? En löydä maitoa. Missä se on?
+
+Tilanne 2. Ystäväsi kutsuu sinut elokuviin tänä iltana, mutta sinulla on kiire. Kieltäydy kohteliaasti. (15 s)
+   Esimerkkivastaus: Kiitos kutsusta, mutta valitettavasti en pääse tänään, koska minulla on kiire. Mennäänkö ensi viikolla?
+
+Tilanne 3. Soitat terveysasemalle. Haluat varata ajan lääkärille. Kerro, mikä sinua vaivaa. (15 s)
+   Esimerkkivastaus: Hei, haluaisin varata ajan lääkärille. Minulla on ollut kuumetta kolme päivää, ja kurkku on kipeä.
+
+Tilanne 4. Naapurisi auttoi sinua muutossa. Kiitä häntä. (15 s)
+   Esimerkkivastaus: Kiitos tosi paljon avusta! Muutto oli paljon helpompi sinun kanssasi. Tuletko joskus meille kahville?

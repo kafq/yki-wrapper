@@ -1,0 +1,21 @@
+Transkripti: 7_Puhelu_Kelaan.mp3 (kesto 01:26)
+Tehty automaattisesti Whisper-mallilla (mlx-community/whisper-large-v3-turbo). Voi sisältää virheitä.
+
+--- Teksti ---
+Kela-asiakaspalvelu Merja Toivonen. Mikko Helminen tässä, hei. Soittelen noista asuntotukiasioista. Jaahas, millainen tilanne teillä on? No, olen just muuttanut uuteen asuntoon ja mulla nousi vuokra satasen. Olisin kysynyt, miten se vaikuttaa asumistukeen. Joo, kyllä se todennäköisesti vaikuttaa. Oletko saanut ihan yleistä asumistukea? Kyllä, yleistä asumistukea. Eli muuttotilanteessa teidän täytyy tehdä tarkistus. Sen voi tehdä verkossa, asiointipalvelussa tai paperisella lomakkeella AT1. Luuletteko, että tarvitsette apua tarkistuksen tekemisessä? En tarvitse. Kyllä se varmaan onnistuu. Mä teen sen netissä, niin on helpointa. Hyvä. Onko se meidän netin asiointipalvelu tuttu teille? Sinne kirjaudutaan nettipankkitunnuksilla. Joo, kyllä mä tiedän sen. Selvä. Ja soittakaa vain, jos tarvitsette apua. Tarvittaessa voidaan varata aika myös tänne toimistoon. Okei, kiitos teille. Kiitos, hei. Hei hei.
+
+--- Aikaleimat ---
+[00:12] Kela-asiakaspalvelu Merja Toivonen.
+[00:16] Mikko Helminen tässä, hei. Soittelen noista asuntotukiasioista.
+[00:21] Jaahas, millainen tilanne teillä on?
+[00:24] No, olen just muuttanut uuteen asuntoon ja mulla nousi vuokra satasen. Olisin kysynyt, miten se vaikuttaa asumistukeen.
+[00:34] Joo, kyllä se todennäköisesti vaikuttaa. Oletko saanut ihan yleistä asumistukea?
+[00:41] Kyllä, yleistä asumistukea.
+[00:43] Eli muuttotilanteessa teidän täytyy tehdä tarkistus. Sen voi tehdä verkossa, asiointipalvelussa tai paperisella lomakkeella AT1. Luuletteko, että tarvitsette apua tarkistuksen tekemisessä?
+[01:00] En tarvitse. Kyllä se varmaan onnistuu. Mä teen sen netissä, niin on helpointa.
+[01:06] Hyvä. Onko se meidän netin asiointipalvelu tuttu teille? Sinne kirjaudutaan nettipankkitunnuksilla.
+[01:14] Joo, kyllä mä tiedän sen.
+[01:15] Selvä. Ja soittakaa vain, jos tarvitsette apua. Tarvittaessa voidaan varata aika myös tänne toimistoon.
+[01:23] Okei, kiitos teille.
+[01:24] Kiitos, hei.
+[01:25] Hei hei.

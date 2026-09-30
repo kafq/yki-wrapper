@@ -1,0 +1,24 @@
+# Your collected content stays on your machine. The 5 examples are tracked
+# on purpose (added with `git add -f`); new files in these folders are ignored.
+/1-Perustaso/
+/2-Keskitaso/
+/3-Ylin-taso/
+/_app/data/
+/_app/questions/
+/_app/reading/*
+/_app/writing/*
+!/_app/reading/.gitkeep
+!/_app/writing/.gitkeep
+/_app/question_status.json
+
+# Personal data and caches
+/_app/sanat.json
+/_app/translations.json
+/_app/*.log
+__pycache__/
+.venv/
+.DS_Store
+
+# Build output
+/site/
+.vercel

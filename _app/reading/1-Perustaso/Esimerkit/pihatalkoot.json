@@ -1,0 +1,83 @@
+{
+ "title": "Ilmoitus: pihatalkoot",
+ "source": "",
+ "sourceName": "Original examples (this repo)",
+ "intro": "Lue ilmoitus. Vastaa kysymyksiin. Onko väite oikein vai väärin? Valitse oikea vaihtoehto.",
+ "text": "HEI, ASUKKAAT!\n\nTaloyhtiö Koivukuja 5 järjestää pihatalkoot lauantaina 17.5. kello 10–14.\n\nHaravoimme pihan, pesemme pihakalusteet ja istutamme kukkia. Taloyhtiö tarjoaa kaikille talkoolaisille kahvia ja pullaa kello 12. Lapset voivat tulla mukaan, ja heille on omaa tekemistä hiekkalaatikon luona.\n\nOta mukaan omat työhanskat, jos sinulla on. Haravat ja muut työkalut saat varastosta.\n\nJos sataa, talkoot siirtyvät seuraavaan lauantaihin.\n\nKysymykset: isännöitsijä Marja Laine, puh. 040 123 4567.\n\nTervetuloa!\nHallitus",
+ "questions": [
+  {
+   "type": "tf",
+   "label": "M1",
+   "text": "M1. Talkoot ovat sunnuntaina.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "tf",
+   "label": "M2",
+   "text": "M2. Talkoolaiset saavat kahvia ja pullaa.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "A"
+   ]
+  },
+  {
+   "type": "tf",
+   "label": "M3",
+   "text": "M3. Lapset eivät saa tulla talkoisiin.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "tf",
+   "label": "M4",
+   "text": "M4. Jokaisen täytyy tuoda oma harava.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "mc",
+   "label": "M5",
+   "text": "M5. Mitä tapahtuu, jos sataa?",
+   "options": [
+    "Talkoot ovat sisällä.",
+    "Talkoot ovat viikkoa myöhemmin.",
+    "Talkoot peruutetaan kokonaan."
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "mc",
+   "label": "M6",
+   "text": "M6. Kenelle voit soittaa, jos sinulla on kysyttävää?",
+   "options": [
+    "hallitukselle",
+    "isännöitsijälle",
+    "talonmiehelle"
+   ],
+   "correct": [
+    "B"
+   ]
+  }
+ ]
+}

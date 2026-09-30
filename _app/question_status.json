@@ -1,0 +1,16 @@
+{
+ "1-Perustaso/Esimerkit-Puhuminen/Tilanteet": {
+  "questions": true,
+  "answers": true,
+  "kind": "speaking",
+  "note": "Speaking task: answer out loud after the beep, then compare with the example answer. The example answers are written for this repo.",
+  "source": ""
+ },
+ "2-Keskitaso/Esimerkit-Puhuminen/Keskustelu-kuntosali": {
+  "questions": true,
+  "answers": true,
+  "kind": "speaking",
+  "note": "Speaking task: answer out loud after the beep, then compare with the example answer. The example answers are written for this repo.",
+  "source": ""
+ }
+}

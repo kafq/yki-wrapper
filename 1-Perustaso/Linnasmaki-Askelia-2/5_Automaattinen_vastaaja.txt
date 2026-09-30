@@ -1,0 +1,21 @@
+Transkripti: 5_Automaattinen_vastaaja.mp3 (kesto 01:37)
+Tehty automaattisesti Whisper-mallilla (mlx-community/whisper-large-v3-turbo). Voi sisältää virheitä.
+
+--- Teksti ---
+Tervetuloa DNA-asiakaspalveluun. Jos haluat palvelua suomeksi, valitse 1. Mikäli asiasi koskee matkapuhelin asioita, valitse 1. TV-palveluita 2. Kotipuhelinta tai luuriliittymää 3. Laajakaistapalveluita 4. Jos tarvitset puhelimeesi PUC-koodin, valitse 1. Jos SIM-korttisi on kadonnut tai varastettu tai jos haluat sulkea mobiilivarmenteen, valitse 2. Mikäli asiasi koskee DNA-äly, DNA-rajaton tai DNA-web-liittymiä, valitse 3. Jos haluat tehdä häiriöilmoituksen tai ilmoittaa kuuluvuusongelmasta, valitse 4. Muissa asioissa odota hetki. Puhelusi yhdistyy asiakaspalveluun. Jos asiasi koskee äly, web tai rajaton liittymän aktivointia, valitse nyt yksi. Muussa tapauksessa odota hetki, niin yhdistämme sinut asiakaspalveluun. Vastaamme puheluoti. Mahdollisimmun pian.
+
+--- Aikaleimat ---
+[00:04] Tervetuloa DNA-asiakaspalveluun.
+[00:09] Jos haluat palvelua suomeksi, valitse 1.
+[00:15] Mikäli asiasi koskee matkapuhelin asioita, valitse 1.
+[00:19] TV-palveluita 2.
+[00:22] Kotipuhelinta tai luuriliittymää 3.
+[00:26] Laajakaistapalveluita 4.
+[00:31] Jos tarvitset puhelimeesi PUC-koodin, valitse 1.
+[00:36] Jos SIM-korttisi on kadonnut tai varastettu tai jos haluat sulkea mobiilivarmenteen, valitse 2.
+[00:44] Mikäli asiasi koskee DNA-äly, DNA-rajaton tai DNA-web-liittymiä, valitse 3.
+[00:51] Jos haluat tehdä häiriöilmoituksen tai ilmoittaa kuuluvuusongelmasta, valitse 4.
+[00:57] Muissa asioissa odota hetki. Puhelusi yhdistyy asiakaspalveluun.
+[01:09] Jos asiasi koskee äly, web tai rajaton liittymän aktivointia, valitse nyt yksi.
+[01:17] Muussa tapauksessa odota hetki, niin yhdistämme sinut asiakaspalveluun.
+[01:32] Vastaamme puheluoti. Mahdollisimmun pian.

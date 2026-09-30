@@ -1,0 +1,18 @@
+{
+ "title": "Kutsu syntymäpäiville",
+ "kind": "epävirallinen viesti",
+ "task": "Sinulla on syntymäpäivä ensi lauantaina. Kirjoita viesti ystävällesi. Kerro viestissä\n- missä ja milloin juhlat ovat\n- mitä juhlissa tehdään\n- mitä ystävän pitää tuoda tai tehdä",
+ "length": "30–50 sanaa",
+ "minWords": 30,
+ "maxWords": 50,
+ "images": [],
+ "models": [
+  {
+   "level": "",
+   "text": "Hei Sari!\n\nMinulla on syntymäpäivä ensi lauantaina, ja järjestän pienet juhlat. Juhlat ovat minun kotonani Kalliossa kello 18. Syömme yhdessä, pelaamme lautapelejä ja kuuntelemme musiikkia. Voisitko tuoda jonkin salaatin? Kerro, pääsetkö tulemaan!\n\nTerveisin\nMaria",
+   "comment": "Written for this repo as an example. Not an official YKI rating."
+  }
+ ],
+ "source": "",
+ "sourceName": "Original examples (this repo)"
+}

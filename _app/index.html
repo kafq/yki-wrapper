@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
+<title>YKI listening player</title>
+<style>
+:root{
+  --bg:#f5f5f3;--side:#edece8;--panel:#ffffff;--text:#1a1a18;--muted:#6c6b66;--faint:#a09f99;
+  --accent:#0b62c4;--accent-soft:#e6effb;--accent-text:#0a56ab;--on-accent:#fff;
+  --cur:#ffd54a;--cur-text:#1a1a18;--now-line:#fff6d2;--saved:#f2b45c;--hover:rgba(0,0,0,.045);
+  --ok:#1e8f4a;--bad:#d13c3c;--seg:rgba(0,0,0,.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.045);
+  --shadow-md:0 6px 16px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.045);
+  --shadow-lg:0 18px 44px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.06);
+  --glass:rgba(245,245,243,.8);
+  --ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1);
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#141413;--side:#1a1a19;--panel:#202020;--text:#ececea;--muted:#9d9c96;--faint:#6b6a65;
+  --accent:#7db3ff;--accent-soft:#1e3352;--accent-text:#a9ccff;--on-accent:#0b1830;
+  --cur:#d3a300;--cur-text:#111;--now-line:#2a2716;--saved:#8a5a1e;--hover:rgba(255,255,255,.06);
+  --ok:#4cc16f;--bad:#ff6b6b;--seg:rgba(255,255,255,.07);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05);
+  --shadow-md:0 6px 18px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);
+  --shadow-lg:0 22px 52px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.07);
+  --glass:rgba(20,20,19,.8);
+}}
+*{box-sizing:border-box}
+html{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+html,body{height:100%}
+body{margin:0;font:15px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);display:grid;grid-template-columns:300px minmax(0,1fr);height:100dvh;font-optical-sizing:auto}
+button,input,textarea{font:inherit;color:inherit}
+button{touch-action:manipulation;user-select:none;-webkit-user-select:none}
+
+/* ---------- sidebar ---------- */
+aside{background:var(--side);overflow:auto;padding:16px 12px 40px;overscroll-behavior:contain}
+.brand{font-weight:700;font-size:17px;letter-spacing:-.01em;padding:2px 8px 12px}
+.seg{position:relative;display:grid;grid-template-columns:repeat(4,1fr);padding:3px;background:var(--seg);border-radius:10px;margin-bottom:8px}
+.seg-pill{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 4);background:var(--panel);border-radius:8px;box-shadow:var(--shadow-sm);transition:transform 200ms var(--ease-out)}
+.seg[data-tab="s"] .seg-pill{transform:translateX(100%)}
+.seg[data-tab="r"] .seg-pill{transform:translateX(200%)}
+.seg[data-tab="w"] .seg-pill{transform:translateX(300%)}
+.seg-btn{position:relative;z-index:1;background:none;border:0;padding:6px 0;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:8px;transition:color 120ms ease}
+.seg-btn.on{color:var(--text)}
+#filter{width:100%;padding:8px 10px;border:0;border-radius:9px;background:var(--panel);box-shadow:var(--shadow-sm);font-size:16px;margin-bottom:6px;outline:none;transition:box-shadow 120ms ease}
+#filter:focus{box-shadow:0 0 0 2px var(--accent-soft),0 0 0 1px var(--accent)}
+.lvl{font-weight:700;margin:18px 8px 2px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.part{margin:10px 8px 3px;font-size:12px;letter-spacing:.01em;color:var(--faint)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:none;padding:6px 8px;border-radius:8px;cursor:pointer;color:var(--text)}
+.item .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .dur{flex-shrink:0;color:var(--faint);font-variant-numeric:tabular-nums;font-size:12.5px;letter-spacing:.01em}
+.item.active{background:var(--panel);box-shadow:var(--shadow-sm);color:var(--accent-text);font-weight:600}
+.item.active .dur{color:var(--accent-text);opacity:.7}
+.empty{color:var(--muted);padding:30px;text-align:center}
+.item.done .nm{opacity:.45}
+.item.done .dur{opacity:.6}
+.item.done .nm::before{content:"✓ ";color:var(--ok);opacity:1}
+.item .nm{transition:opacity 150ms ease}
+.donebtn{margin-top:10px;padding:5px 11px;font-size:13px}
+.donebtn[aria-pressed="true"]{background:var(--ok);color:#fff;box-shadow:none}
+
+/* ---------- main ---------- */
+main{overflow:auto;padding:0 32px 72px;position:relative;overscroll-behavior:contain}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:24px 0 12px;flex-wrap:wrap}
+.crumb{color:var(--muted);font-size:13px;letter-spacing:.005em}
+h1{margin:2px 0 0;font-size:24px;line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--panel);box-shadow:var(--shadow-sm);color:var(--text);padding:7px 12px;border-radius:9px;cursor:pointer;font-size:14px;transition:transform 160ms var(--ease-out),background-color 120ms ease,color 120ms ease,box-shadow 120ms ease}
+.btn:active{transform:scale(.97)}
+a.btn{text-decoration:none}
+.short{display:none}
+.btn.primary{background:var(--accent);color:var(--on-accent);box-shadow:none}
+.btn.primary:disabled{opacity:.55;cursor:default}
+.btn.icon{padding:7px 9px}
+.tog[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent-text)}
+.badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:600;text-align:center;line-height:20px}
+@media(hover:hover) and (pointer:fine){
+  .item:hover{background:var(--hover)}
+  .item.active:hover{background:var(--panel)}
+  .btn:hover{box-shadow:var(--shadow-md)}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .seg-btn:hover{color:var(--text)}
+}
+
+/* sticky player chrome: translucent, no hard divider, a soft edge where content scrolls under */
+.sticky{position:sticky;top:0;z-index:5;padding:8px 0 10px;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.sticky::after{content:"";position:absolute;left:0;right:0;bottom:-14px;height:14px;background:linear-gradient(var(--bg),transparent);opacity:.9;pointer-events:none}
+@media(prefers-reduced-transparency:reduce){.sticky{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}}
+/* custom player: play, skip and replay live inside it */
+.player{display:flex;align-items:center;gap:8px;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-sm);padding:8px 12px 8px 8px}
+.pb{display:inline-flex;align-items:center;justify-content:center;gap:4px;height:34px;min-width:34px;padding:0 9px;border:0;border-radius:9px;background:none;color:var(--text);cursor:pointer;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;transition:transform 160ms var(--ease-out),background-color 120ms ease}
+.pb:active{transform:scale(.94)}
+.pb svg{width:16px;height:16px;flex-shrink:0}
+.pb.play{width:40px;height:40px;min-width:40px;padding:0;border-radius:50%;background:var(--accent);color:var(--on-accent)}
+.pb.play svg{width:18px;height:18px}
+.ptime{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.seek{flex:1;min-width:60px;display:flex;align-items:center;gap:10px}
+#seek{flex:1;-webkit-appearance:none;appearance:none;height:22px;background:none;margin:0;cursor:pointer;--p:0%}
+#seek::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--p),var(--seg) var(--p))}
+#seek::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--p),var(--seg) var(--p))}
+#seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;background:var(--accent);border:2px solid var(--panel);box-shadow:var(--shadow-sm)}
+#seek::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--panel)}
+/* toggles under the player: every option in view, no hidden menu */
+.opts{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none;padding:1px}
+.opts::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:5px 11px;font-size:13px;background:var(--seg);color:var(--muted);cursor:pointer;transition:background-color 120ms ease,color 120ms ease,transform 160ms var(--ease-out)}
+.chip:active{transform:scale(.96)}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.35;transition:opacity 120ms ease}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent-text)}
+.chip[aria-pressed="true"]::before{opacity:1}
+.chip:disabled{opacity:.4;cursor:default}
+.sub{margin-top:10px;min-height:76px;padding:14px 18px;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-sm);font-size:22px;line-height:1.5;letter-spacing:-.005em;transition:opacity 200ms ease}
+.sub .hint{color:var(--muted);font-size:15px;letter-spacing:0}
+.sub.past{opacity:.5}
+.next{min-height:18px;font-size:12px;color:var(--faint);padding:5px 4px 0;letter-spacing:.01em}
+
+/* words: hover is a reading aid, tens of times per minute — no motion, just a state */
+.w{cursor:pointer;border-radius:4px;padding:0 1px;touch-action:manipulation}
+.w.sel{background:var(--accent-soft);color:var(--accent-text)}
+.w.cur{background:var(--cur);color:var(--cur-text)}
+.w.saved{box-shadow:inset 0 -2px 0 var(--saved)}
+@media(hover:hover) and (pointer:fine){.w:hover{background:var(--accent-soft);color:var(--accent-text)}.rt .w:hover{background:var(--hover);color:inherit}}
+
+.lines{margin-top:20px}
+.line{display:flex;gap:12px;padding:6px 10px;border-radius:8px;margin:0;animation:rise 240ms var(--ease-out) both;animation-delay:min(calc(var(--i) * 25ms),300ms)}
+.line.now{background:var(--now-line)}
+.line .t{flex:0 0 46px;color:var(--faint);font-variant-numeric:tabular-nums;font-size:12.5px;line-height:24px;cursor:pointer;user-select:none;border-radius:6px;transition:color 120ms ease}
+.line .t:active{transform:scale(.96)}
+@media(hover:hover) and (pointer:fine){.line .t:hover{color:var(--accent-text)}}
+.line .tx{flex:1}
+
+/* reading */
+.rt{max-width:76ch;padding:18px 0 6px}
+.rintro{color:var(--muted);font-size:15px;white-space:pre-wrap;margin-bottom:14px}
+.rt p.rp{font-size:19px;line-height:1.7;margin:0 0 14px;white-space:pre-wrap;animation:rise 260ms var(--ease-out) both;animation-delay:min(calc(var(--i) * 40ms),320ms)}
+/* writing */
+.wt{max-width:76ch;padding:18px 0 6px}
+.wkind{display:inline-block;font-size:12px;font-weight:600;color:var(--accent-text);background:var(--accent-soft);border-radius:999px;padding:2px 10px;margin-bottom:10px}
+.wtask{font-size:18px;line-height:1.65;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-sm);padding:16px 20px}
+.wtask p{margin:0 0 8px;white-space:pre-wrap}.wtask p:last-child{margin:0}
+.wtask p.li{padding-left:18px;text-indent:-12px}
+.wimgs img{max-width:100%;border-radius:12px;margin-top:12px;box-shadow:var(--shadow-sm)}
+.wlen{font-size:14px;color:var(--muted);margin:10px 2px 0}
+.wed{margin-top:16px}
+.wed textarea{width:100%;min-height:220px;font-size:17px;line-height:1.6;padding:14px 16px;border:0;border-radius:14px;background:var(--panel);box-shadow:var(--shadow-sm);resize:vertical;outline:none;transition:box-shadow 120ms ease}
+.wed textarea:focus{box-shadow:0 0 0 2px var(--accent-soft),0 0 0 1px var(--accent)}
+.wbar{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:14px;color:var(--muted)}
+.wbar .wc{font-variant-numeric:tabular-nums;font-weight:600}
+.wbar .wc.ok{color:var(--ok)}.wbar .wc.over{color:var(--bad)}
+.wbar .sp{flex:1}
+.wmodels{margin-top:18px;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-sm);padding:6px 18px 8px}
+.wmodel{padding:14px 0;border-top:1px solid var(--hover)}
+.wmodel:first-of-type{border-top:0}
+.wlevel{display:inline-block;font-size:12px;font-weight:700;color:var(--on-accent);background:var(--accent);border-radius:999px;padding:2px 10px;margin-bottom:8px}
+.wmtext p{font-size:17px;line-height:1.65;margin:0 0 8px;white-space:pre-wrap}
+.wcomment{font-size:14px;color:var(--muted);margin-top:6px;white-space:pre-wrap}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* questions */
+.qnote{margin-top:18px;display:flex;gap:12px;align-items:flex-start;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-sm);padding:14px 18px;font-size:15px;color:var(--muted)}
+.qnote::before{content:"i";flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--seg);color:var(--muted);font:700 12px/20px Georgia,serif;text-align:center;margin-top:1px}
+.qnote b{color:var(--text);font-weight:600;display:block;margin-bottom:2px}
+.qnote a{color:var(--accent-text)}
+.qnote.inline{margin:4px 0 10px;box-shadow:none;background:var(--bg);padding:10px 14px}
+.qnone{margin-top:6px;font-size:14px;color:var(--faint)}
+.qgroup{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;padding:18px 0 4px}
+section.q{margin-top:18px;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-sm);padding:6px 18px 8px}
+section.q summary,.wmodels summary{cursor:pointer;font-weight:600;padding:10px 0;list-style:none;display:flex;align-items:center;gap:8px;letter-spacing:-.005em}
+section.q summary::-webkit-details-marker,.wmodels summary::-webkit-details-marker{display:none}
+section.q summary::before{content:"";width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(-45deg);transition:transform 160ms var(--ease-out);margin:0 4px 2px 2px}
+section.q details[open] summary::before{transform:rotate(45deg)}
+pre{white-space:pre-wrap;font:inherit;font-size:16px;margin:8px 0 12px}
+.qintro{font-size:15px;color:var(--muted);white-space:pre-wrap;margin:2px 0 8px}
+.qq{padding:14px 0;border-top:1px solid var(--hover)}
+.qt{font-size:18px;font-weight:600;margin-bottom:10px;white-space:pre-wrap;line-height:1.4;letter-spacing:-.01em}
+.qopts{display:flex;flex-direction:column;gap:4px}
+.qopt{font-size:17px;display:flex;gap:10px;align-items:baseline;cursor:pointer;padding:7px 10px;border-radius:9px;transition:background-color 100ms ease,box-shadow 100ms ease;touch-action:manipulation}
+.qopt:has(input:checked){background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.qopt input{accent-color:var(--accent);transform:scale(1.2);margin:0 2px 0 0}
+@media(hover:hover) and (pointer:fine){.qopt:hover{background:var(--hover)}.qopt:has(input:checked):hover{background:var(--accent-soft)}}
+.qq textarea{width:100%;font-size:16px;padding:9px 11px;border:0;border-radius:9px;background:var(--bg);box-shadow:var(--shadow-sm);resize:vertical;outline:none;transition:box-shadow 120ms ease}
+.qq textarea:focus{box-shadow:0 0 0 2px var(--accent-soft),0 0 0 1px var(--accent)}
+.qmodel{margin-top:8px;font-size:16px;color:var(--accent-text);white-space:pre-wrap}
+.qfb{margin-top:8px;font-size:15px;font-weight:600;min-height:20px;opacity:1;transition:opacity 150ms var(--ease-out)}
+.qfb:empty{opacity:0}
+.qq.right .qfb{color:var(--ok)}.qq.wrong .qfb{color:var(--bad)}
+.qq.right{background:linear-gradient(90deg,rgba(30,143,74,.09),transparent 70%)}.qq.wrong{background:linear-gradient(90deg,rgba(209,60,60,.09),transparent 70%)}
+.qbar{display:flex;gap:10px;align-items:center;padding:14px 0 8px;border-top:1px solid var(--hover)}
+.qscore{font-weight:600;font-size:16px;margin-left:6px;font-variant-numeric:tabular-nums}
+.btn.small{padding:5px 10px;font-size:13px;margin-top:8px}
+
+/* popover: scales out of the word it belongs to; tooltip speed */
+.pop{position:fixed;z-index:50;min-width:240px;max-width:360px;background:var(--panel);border-radius:14px;box-shadow:var(--shadow-lg);padding:12px 14px;visibility:hidden;opacity:0;transform:scale(.97);transition:opacity 100ms var(--ease-out),transform 100ms var(--ease-out),visibility 0s linear 100ms}
+.pop[data-open]{visibility:visible;opacity:1;transform:none;transition:opacity 125ms var(--ease-out),transform 125ms var(--ease-out),visibility 0s}
+.pop .pw{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.pop .pt{font-size:16px;margin:3px 0 6px;color:var(--accent-text)}
+.pop .pc{font-size:13px;color:var(--muted);margin-bottom:10px;max-height:60px;overflow:hidden;line-height:1.45}
+.pop .row{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.pop a{color:var(--muted);font-size:13px;text-decoration:none;border-bottom:1px solid var(--hover)}
+@media(hover:hover) and (pointer:fine){.pop a:hover{color:var(--accent-text)}}
+
+
+/* modal: the one surface that stays centered */
+.modal{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.42);visibility:hidden;opacity:0;transition:opacity 200ms var(--ease-out),visibility 0s linear 200ms}
+.modal[data-open]{visibility:visible;opacity:1;transition:opacity 250ms var(--ease-out),visibility 0s}
+.box{background:var(--panel);border-radius:16px;width:min(860px,100%);max-height:90dvh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);transform:scale(.96);transition:transform 200ms var(--ease-out)}
+.modal[data-open] .box{transform:none;transition:transform 250ms var(--ease-out)}
+.box header{padding:16px 20px;align-items:center;border-bottom:1px solid var(--hover)}
+.box .body{overflow:auto;padding:10px 20px 20px;overscroll-behavior:contain}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--hover);vertical-align:top}
+th{color:var(--faint);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+td.ctx{color:var(--muted);font-size:13px}
+.x{border:0;background:none;color:var(--faint);cursor:pointer;font-size:16px;border-radius:6px;padding:2px 6px;transition:color 120ms ease,transform 160ms var(--ease-out)}
+.x:active{transform:scale(.9)}
+@media(hover:hover) and (pointer:fine){.x:hover{color:var(--bad)}}
+.card{margin:20px auto;max-width:520px;text-align:center;padding:34px 20px;border-radius:16px;box-shadow:var(--shadow-sm)}
+.card .big{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.card .ans{font-size:20px;color:var(--accent-text);min-height:30px;margin:12px 0}
+.card .ctx{color:var(--muted);font-size:14px;min-height:22px}
+
+#mfiles,.scrim{display:none}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){
+  .line,.rt p.rp{animation:fadein 150ms ease both;animation-delay:0s}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .pop,.box,.modal[data-open] .box{transform:none!important}
+  .seg-pill{transition:none}
+}
+@media(max-width:760px){
+  body{grid-template-columns:1fr}
+  /* file list becomes a drawer from the left */
+  aside{position:fixed;inset:0 auto 0 0;z-index:70;width:min(86vw,340px);padding:max(14px,env(safe-area-inset-top)) 12px max(40px,env(safe-area-inset-bottom));transform:translateX(-100%);transition:transform 260ms var(--ease-out);box-shadow:var(--shadow-lg)}
+  body.drawer aside{transform:none}
+  .scrim{display:block;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.35);visibility:hidden;opacity:0;transition:opacity 200ms var(--ease-out),visibility 0s linear 200ms}
+  body.drawer .scrim{visibility:visible;opacity:1;transition:opacity 260ms var(--ease-out),visibility 0s}
+  .item{padding:10px 8px;font-size:16px}
+  #mfiles{display:inline-flex}
+  main{padding:0 16px max(40px,env(safe-area-inset-bottom))}
+  header{padding-top:max(14px,env(safe-area-inset-top));gap:10px}
+  h1{font-size:20px}
+  .tools{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;padding:2px}
+  .tools::-webkit-scrollbar{display:none}
+  .btn{padding:8px 11px;flex-shrink:0}
+  .tools .long{display:none}.tools .short{display:inline}
+  .sticky{padding-top:6px}
+  .sub{font-size:20px;padding:12px 14px;min-height:64px}
+  .player{flex-wrap:wrap;padding:8px 10px;row-gap:4px;justify-content:space-between}
+  .seek{order:-1;flex-basis:100%;padding:0 2px}
+  .pb{height:38px;font-size:14px;padding:0 10px}
+  .pb.play{width:46px;height:46px;min-width:46px}
+  .chip{padding:7px 12px;font-size:14px}
+  .line{padding:7px 6px;gap:8px;font-size:16px}
+  .line .t{flex-basis:40px;padding:0 2px}
+  .rt p.rp{font-size:18px}
+  section.q{padding:4px 14px 8px}
+  .qopt{padding:10px}
+  /* word popover becomes a bottom sheet */
+  .pop{left:8px!important;right:8px;top:auto!important;bottom:max(8px,env(safe-area-inset-bottom));max-width:none;min-width:0;padding:16px 18px;transform-origin:50% 100%!important;transform:translateY(12px)}
+  .pop .pw{font-size:22px}.pop .pt{font-size:18px}
+  .pop .pc{max-height:none;font-size:14px}
+  .pop .btn{padding:10px 16px;font-size:15px}
+  .pop a{font-size:14px}
+  /* saved words: full-height sheet, rows stack */
+  .modal{padding:0;align-items:flex-end}
+  .box{max-height:92dvh;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom)}
+  .box header{padding:14px 16px;flex-direction:column;align-items:stretch}
+  .box .body{padding:6px 16px 20px}
+  thead{display:none}
+  table,tbody,tr,td{display:block}
+  tr{position:relative;padding:10px 36px 10px 0;border-bottom:1px solid var(--hover)}
+  td{border:0;padding:1px 0}
+  td:last-child{position:absolute;top:8px;right:0}
+  .x{font-size:18px;padding:6px 8px}
+}
+@media(prefers-reduced-motion:reduce){aside{transition:none}}
+</style>
+</head>
+<body>
+<div class="scrim" id="scrim"></div>
+<aside>
+  <div class="brand">YKI</div>
+  <div class="seg" id="tabs" data-tab="a"><span class="seg-pill"></span><button class="seg-btn" data-tab="a">Listening</button><button class="seg-btn" data-tab="s">Speaking</button><button class="seg-btn" data-tab="r">Reading</button><button class="seg-btn" data-tab="w">Writing</button></div>
+  <input id="filter" placeholder="Filter…" autocapitalize="none" autocorrect="off">
+  <div id="list"></div>
+</aside>
+<main>
+  <header>
+    <div><div class="crumb" id="crumb"></div><h1 id="title">Choose a file</h1><button class="btn donebtn" id="done" aria-pressed="false" hidden>Mark as complete</button></div>
+    <div class="tools">
+      <button class="btn" id="mfiles" aria-label="Files">☰ Files</button>
+      <button class="btn" id="openWords">Words <span class="badge" id="cnt">0</span></button>
+    </div>
+  </header>
+  <div class="sticky" id="sticky">
+    <audio id="audio" preload="auto"></audio>
+    <div class="player" id="player">
+      <button class="pb" id="back5" aria-label="Back 5 seconds" title="Back 5 s (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>5</button>
+      <button class="pb play" id="pp" aria-label="Play" title="Play / pause (Space)"><svg id="ppIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></button>
+      <button class="pb" id="fwd5" aria-label="Forward 5 seconds" title="Forward 5 s (→)">5<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></button>
+      <button class="pb" id="replay" title="Play the current line again">Replay line</button>
+      <div class="seek"><span class="ptime" id="tCur">0:00</span><input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="Position"><span class="ptime" id="tDur">0:00</span></div>
+      <button class="pb" id="rate" title="Playback speed">1×</button>
+    </div>
+    <div class="opts" id="opts">
+      <button class="chip" data-opt="subs">Subtitles</button>
+      <button class="chip" data-opt="lines">Transcript</button>
+      <button class="chip" data-opt="follow" data-needs="lines" title="The transcript scrolls so the line you hear stays in view">Auto-scroll transcript</button>
+      <button class="chip" data-opt="pause" title="Audio pauses when you open a word to see its translation">Pause on word</button>
+      <button class="chip" data-opt="resume" data-needs="pause" title="Audio plays again when you close the word">Play again on close</button>
+    </div>
+    <div class="sub" id="sub"><span class="hint">Pick a file and press play. Hover or tap a word to pause and see its translation.</span></div>
+    <div class="next" id="next"></div>
+  </div>
+  <section class="wt" id="wt" hidden>
+    <div class="wkind" id="wKind"></div>
+    <div class="wtask" id="wTask"></div>
+    <div class="wimgs" id="wImgs"></div>
+    <div class="wlen" id="wLen"></div>
+    <div class="wed"><textarea id="wText" placeholder="Write your text here. It is kept in this browser as a draft." spellcheck="false" lang="fi"></textarea>
+      <div class="wbar"><span class="wc" id="wCount">0 words</span><span class="sp"></span><button class="btn small" id="wClear" style="margin-top:0">Clear</button></div></div>
+    <details class="wmodels" id="wModels"><summary id="wModSum">Example answers</summary><div id="wModList"></div></details>
+  </section>
+  <section class="rt" id="rt" hidden><div class="rintro" id="rIntro"></div><div id="rBody"></div></section>
+  <div class="qnote" id="qNone" hidden></div>
+  <section class="q" id="q" hidden>
+    <details open><summary id="qSum">Questions</summary>
+      <div class="qintro" id="qIntro"></div>
+      <div class="qnote inline" id="qWarn" hidden></div>
+      <div id="qList"></div>
+      <div class="qbar" id="qBar"><button class="btn primary" id="qCheck">Check answers</button><button class="btn" id="qReset">Reset</button><span class="qscore" id="qScore"></span></div>
+      <pre id="qText" hidden></pre>
+    </details>
+  </section>
+  <section class="lines" id="lines"></section>
+</main>
+
+
+<div class="pop" id="pop">
+  <div class="pw" id="popWord"></div>
+  <div class="pt" id="popTr">…</div>
+  <div class="pc" id="popCtx"></div>
+  <div class="row"><a id="popWik" href="#" target="_blank" rel="noopener">Wiktionary ↗</a><button class="btn primary" id="popSave">Save word</button></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <header>
+      <h1 style="font-size:18px">Saved words <span class="badge" id="cnt2">0</span></h1>
+      <div class="tools">
+        <button class="btn" id="practice">Practice</button>
+        <a class="btn" href="/api/words.csv" download>Export CSV</a>
+        <button class="btn" id="closeModal">Close</button>
+      </div>
+    </header>
+    <div class="body" id="wordsBody"></div>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const audio=$('#audio');
+const S={items:[],reading:[],mode:'listening',tab:localStorage.getItem('yki:tab')||'a',id:null,data:null,seg:-1,word:-1,tr:{},saved:[],savedKeys:new Set(),wasPlaying:false,popTimer:null,hoverKey:null,raf:null,q:null,
+  settings:Object.assign({pause:true,resume:true,follow:true,subs:true,lines:true,rate:1},JSON.parse(localStorage.getItem('yki:settings')||'{}'))};
+const keyOf=w=>w.normalize('NFC').replace(/[^\p{L}\p{N}-]/gu,'').replace(/^-+|-+$/g,'').toLowerCase();
+const fmt=t=>`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const loadDone=()=>{ try{ return new Set(JSON.parse(localStorage.getItem('yki:done')||'[]')); }catch(e){ return new Set(); } };
+S.done=loadDone();
+const saveSettings=()=>localStorage.setItem('yki:settings',JSON.stringify(S.settings));
+
+async function init(){
+  S.items=await (await fetch('/api/index')).json();
+  try{ S.reading=await (await fetch('/api/reading')).json(); }catch(e){ S.reading=[]; }
+  try{ S.writing=await (await fetch('/api/writing')).json(); }catch(e){ S.writing=[]; }
+  S.saved=await (await fetch('/api/words')).json(); S.savedKeys=new Set(S.saved.map(x=>x.word)); updateCount();
+  renderSidebar(); bindSettings();
+  const last=localStorage.getItem('yki:last');
+  if(last && last.startsWith('r:') && S.reading.some(r=>'r:'+r.id===last)) loadReading(last.slice(2));
+  else if(last && last.startsWith('w:') && S.writing.some(r=>'w:'+r.id===last)) loadWriting(last.slice(2));
+  else{ const first=S.items.find(i=>i.id===last)||S.items[0]; if(first) load(first.id); }
+}
+
+/* ---------- sidebar ---------- */
+function renderSidebar(filter=''){
+  const box=$('#list'); box.innerHTML=''; const f=filter.trim().toLowerCase();
+  const items=S.tab==='r'?S.reading:S.tab==='w'?(S.writing||[]):S.items.filter(i=>(i.section==='speaking')===(S.tab==='s')); const kind=S.tab;
+  let lvl=null,part=null,shown=0;
+  for(const it of items){
+    const key=kind==='r'?'r:'+it.id:kind==='w'?'w:'+it.id:it.id; const name=it.title||(it.name||'').replace(/_/g,' ');
+    if(f && !(name+' '+(it.name||'')+' '+it.levelName+' '+it.partName).toLowerCase().includes(f)) continue;
+    if(it.level!==lvl){const h=document.createElement('div');h.className='lvl';h.textContent=it.levelName;box.appendChild(h);lvl=it.level;part=null;}
+    if(it.part!==part){const h=document.createElement('div');h.className='part';h.textContent=it.partName;box.appendChild(h);part=it.part;}
+    const b=document.createElement('button');b.className='item'+(key===S.id?' active':'')+(S.done.has(key)?' done':'');b.dataset.id=key;
+    const meta=kind==='r'?(it.nq?it.nq+' q':''):kind==='w'?(it.nm?it.nm+' ex':''):(it.duration?fmt(it.duration):'');
+    b.innerHTML=`<span class="nm" title="${esc(it.name||name)}">${esc(name)}</span><span class="dur">${meta}</span>`;
+    b.onclick=()=>{ closeDrawer(); kind==='r'?loadReading(it.id):kind==='w'?loadWriting(it.id):load(it.id); }; box.appendChild(b); shown++;
+  }
+  if(!shown) box.innerHTML='<div class="empty">Nothing matches.</div>';
+  $('#tabs').dataset.tab=S.tab; $$('.seg-btn').forEach(b=>b.classList.toggle('on',b.dataset.tab===S.tab));
+}
+$('#filter').addEventListener('input',e=>renderSidebar(e.target.value));
+/* ---------- mark as complete: kept in this browser ---------- */
+function updateDone(){ const b=$('#done'), on=S.done.has(S.id); b.hidden=!S.id; b.setAttribute('aria-pressed',String(on)); b.textContent=on?'Completed ✓':'Mark as complete'; }
+$('#done').onclick=()=>{
+  if(!S.id) return; S.done.has(S.id)?S.done.delete(S.id):S.done.add(S.id);
+  try{ localStorage.setItem('yki:done',JSON.stringify([...S.done])); }catch(e){}
+  $$('.item').forEach(b=>{ if(b.dataset.id===S.id) b.classList.toggle('done',S.done.has(S.id)); }); updateDone();
+};
+const openDrawer=()=>document.body.classList.add('drawer'), closeDrawer=()=>document.body.classList.remove('drawer');
+$('#mfiles').onclick=openDrawer; $('#scrim').onclick=closeDrawer;
+$$('.seg-btn').forEach(b=>b.onclick=()=>{ S.tab=b.dataset.tab; localStorage.setItem('yki:tab',S.tab); renderSidebar($('#filter').value); });
+function setTab(t){ if(S.tab!==t){ S.tab=t; localStorage.setItem('yki:tab',t); renderSidebar($('#filter').value); } }
+
+/* ---------- listening ---------- */
+async function load(id){
+  const it=S.items.find(i=>i.id===id); if(!it) return;
+  S.id=id; S.mode='listening'; localStorage.setItem('yki:last',id); hidePop(true);
+  $('#sticky').hidden=false; $('#rt').hidden=true; $('#wt').hidden=true; applyVisibility(); setTab(it.section==='speaking'?'s':'a');
+  S.speaking=it.section==='speaking'; $('#qSum').textContent=S.speaking?'Task':'Questions';
+  $$('.item').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  $('#title').textContent=it.title||it.name.replace(/_/g,' '); $('#crumb').textContent=`${it.levelName} · ${it.partName}`; updateDone();
+  audio.pause(); audio.src='/files/'+encodeURI(it.mp3); S.seg=-1; S.word=-1;
+  S.data=it.hasData?await (await fetch('/files/_app/data/'+encodeURI(id)+'.json')).json():{segments:[]};
+  renderLines(); $('#sub').className='sub'; $('#sub').innerHTML='<span class="hint">Press play. Hover or tap a word to pause and see its translation.</span>'; $('#next').textContent='';
+  loadQuestions(it); prefetch();
+}
+function wordSpan(w,i,j){
+  const s=document.createElement('span'); s.className='w'; s.textContent=w; s.dataset.i=i; s.dataset.j=j;
+  const k=keyOf(w);
+  if(k && !/^[\d-]+$/.test(k)){ s.dataset.k=k; if(S.savedKeys.has(k)) s.classList.add('saved');
+    s.addEventListener('pointerenter',e=>{ if(e.pointerType==='mouse') onEnter(s); });
+    s.addEventListener('pointerleave',e=>{ if(e.pointerType==='mouse') onLeave(); });
+    s.addEventListener('click',e=>{ e.stopPropagation(); onTap(s); }); }
+  return s;
+}
+function fillWords(el,seg,i){
+  const words=seg.words&&seg.words.length?seg.words.map(w=>w.w):seg.text.split(/\s+/);
+  words.forEach((w,j)=>{ if(j) el.appendChild(document.createTextNode(' ')); el.appendChild(wordSpan(w,i,j)); });
+}
+function renderLines(){
+  const box=$('#lines'); box.innerHTML='';
+  if(!S.data.segments.length){ box.innerHTML='<div class="empty">No transcript for this file yet.</div>'; return; }
+  S.data.segments.forEach((seg,i)=>{
+    const p=document.createElement('p'); p.className='line'; p.dataset.i=i; p.style.setProperty('--i',i);
+    const t=document.createElement('span'); t.className='t'; t.textContent=fmt(seg.start); t.title='Play from here';
+    t.onclick=()=>{ audio.currentTime=seg.start; audio.play(); };
+    const tx=document.createElement('span'); tx.className='tx'; fillWords(tx,seg,i);
+    p.append(t,tx); box.appendChild(p);
+  });
+}
+function renderSub(i){
+  const sub=$('#sub'); sub.innerHTML='';
+  if(i<0||!S.data.segments[i]){ sub.innerHTML='<span class="hint">…</span>'; return; }
+  fillWords(sub,S.data.segments[i],i);
+}
+function sync(){
+  if(!S.data||S.mode!=='listening') return; const segs=S.data.segments; if(!segs.length) return; const t=audio.currentTime+0.05;
+  let i=-1; for(let k=0;k<segs.length;k++){ if(segs[k].start<=t) i=k; else break; }
+  if(i!==S.seg){ S.seg=i; S.word=-1; $$('.line.now').forEach(l=>l.classList.remove('now'));
+    const ln=document.querySelector(`.line[data-i="${i}"]`);
+    if(ln){ ln.classList.add('now'); if(S.settings.follow && S.settings.lines && !audio.paused) ln.scrollIntoView({block:'center',behavior:'smooth'}); }
+    renderSub(i); }
+  const past=i>=0 && i<segs.length-1 && t>segs[i].end+1;
+  $('#sub').classList.toggle('past',past); $('#next').textContent=past?`Pause in the recording · next line at ${fmt(segs[i+1].start)}`:'';
+  const ws=i>=0?(segs[i].words||[]):[]; let j=-1; for(let k=0;k<ws.length;k++){ if(ws[k].s<=t) j=k; else break; }
+  if(j!==S.word){ S.word=j; $$('.w.cur').forEach(x=>x.classList.remove('cur')); $$(`.w[data-i="${i}"][data-j="${j}"]`).forEach(x=>x.classList.add('cur')); }
+}
+function tick(){ sync(); drawTime(); if(!audio.paused) S.raf=requestAnimationFrame(tick); }
+audio.addEventListener('play',()=>{cancelAnimationFrame(S.raf); tick();});
+audio.addEventListener('pause',()=>cancelAnimationFrame(S.raf));
+audio.addEventListener('seeked',sync);
+/* ---------- player ---------- */
+const PLAY='<path d="M8 5.5v13l11-6.5z"/>', PAUSE='<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>';
+const skip=d=>{ audio.currentTime=Math.max(0,Math.min(audio.duration||1e9,audio.currentTime+d)); };
+let seeking=false;
+function drawTime(){
+  const d=audio.duration||0, t=audio.currentTime||0;
+  if(!seeking){ $('#seek').value=d?Math.round(t/d*1000):0; }
+  $('#seek').style.setProperty('--p',($('#seek').value/10)+'%');
+  $('#tCur').textContent=fmt(seeking&&d?$('#seek').value/1000*d:t); $('#tDur').textContent=d?fmt(d):'0:00';
+}
+$('#pp').onclick=()=>{ if(!audio.src) return; audio.paused?audio.play():audio.pause(); };
+audio.addEventListener('play',()=>{ $('#ppIcon').innerHTML=PAUSE; $('#pp').setAttribute('aria-label','Pause'); });
+audio.addEventListener('pause',()=>{ $('#ppIcon').innerHTML=PLAY; $('#pp').setAttribute('aria-label','Play'); });
+['timeupdate','loadedmetadata','durationchange','emptied'].forEach(ev=>audio.addEventListener(ev,drawTime));
+$('#seek').addEventListener('input',()=>{ seeking=true; drawTime(); });
+$('#seek').addEventListener('change',()=>{ if(audio.duration) audio.currentTime=$('#seek').value/1000*audio.duration; seeking=false; drawTime(); });
+$('#back5').onclick=()=>skip(-5);
+$('#fwd5').onclick=()=>skip(5);
+const RATES=[1,.9,.75];
+function applyRate(){ audio.playbackRate=S.settings.rate||1; audio.defaultPlaybackRate=audio.playbackRate; $('#rate').textContent=(S.settings.rate||1)+'×'; }
+$('#rate').onclick=()=>{ const i=RATES.indexOf(S.settings.rate); S.settings.rate=RATES[(i+1)%RATES.length]; saveSettings(); applyRate(); };
+audio.addEventListener('loadedmetadata',applyRate);
+$('#replay').onclick=()=>{ const seg=S.data&&S.data.segments[Math.max(0,S.seg)]; if(!seg) return; audio.currentTime=seg.start; audio.play(); };
+audio.addEventListener('loadedmetadata',sync);
+
+/* ---------- reading ---------- */
+async function loadReading(id){
+  const it=S.reading.find(r=>r.id===id); if(!it) return;
+  hidePop(true); audio.pause(); S.mode='reading'; S.speaking=false; $('#qSum').textContent='Questions'; S.id='r:'+id; localStorage.setItem('yki:last','r:'+id); setTab('r');
+  $$('.item').forEach(b=>b.classList.toggle('active',b.dataset.id==='r:'+id));
+  $('#title').textContent=it.title; $('#crumb').textContent=`${it.levelName} · ${it.partName}`; updateDone();
+  $('#sticky').hidden=true; $('#lines').hidden=true; $('#lines').innerHTML=''; $('#rt').hidden=false; $('#wt').hidden=true;
+  let d={}; try{ d=await (await fetch('/files/_app/reading/'+encodeURI(id)+'.json')).json(); }catch(e){}
+  const paras=(d.text||'').split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
+  S.data={segments:paras.map(x=>({start:0,end:0,text:x,words:[]}))}; S.seg=-1; S.word=-1;
+  $('#rIntro').textContent=d.intro||''; const body=$('#rBody'); body.innerHTML='';
+  paras.forEach((x,i)=>{ const p=document.createElement('p'); p.className='rp'; p.style.setProperty('--i',i); fillWords(p,S.data.segments[i],i); body.appendChild(p); });
+  $('#q').hidden=true; S.q=null; $('#qList').innerHTML=''; $('#qNone').hidden=true; $('#qWarn').hidden=true; S.qstatus=null;
+  if(d.questions&&d.questions.length){ renderQuestions({title:d.title,intro:'',questions:d.questions}); $('#q').hidden=false; }
+  else showNone('No questions or answers','The source of this text has no questions or answers.');
+  prefetch();
+}
+
+/* ---------- writing ---------- */
+const countWords=t=>(t.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu)||[]).length;
+async function loadWriting(id){
+  const it=(S.writing||[]).find(r=>r.id===id); if(!it) return;
+  hidePop(true); audio.pause(); S.mode='writing'; S.speaking=false; S.id='w:'+id; localStorage.setItem('yki:last','w:'+id); setTab('w');
+  $$('.item').forEach(b=>b.classList.toggle('active',b.dataset.id==='w:'+id));
+  $('#title').textContent=it.title; $('#crumb').textContent=`${it.levelName} · ${it.partName}`; updateDone();
+  $('#sticky').hidden=true; $('#lines').hidden=true; $('#lines').innerHTML=''; $('#rt').hidden=true; $('#q').hidden=true; $('#qNone').hidden=true; $('#wt').hidden=false;
+  let d={}; try{ d=await (await fetch('/files/_app/writing/'+encodeURI(id)+'.json')).json(); }catch(e){}
+  S.wd=d; const segs=[];
+  const para=(el,text,cls)=>{ const p=document.createElement('p'); if(cls) p.className=cls; const i=segs.length; segs.push({start:0,end:0,text,words:[]}); S.data={segments:segs}; fillWords(p,segs[i],i); el.appendChild(p); };
+  $('#wKind').textContent=d.kind||''; $('#wKind').hidden=!d.kind;
+  const task=$('#wTask'); task.innerHTML='';
+  (d.task||'').split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(l=>para(task,l.replace(/^-\s*/,'• '),/^-/.test(l)?'li':''));
+  $('#wImgs').innerHTML=(d.images||[]).map(src=>`<img src="/files/${encodeURI(src)}" alt="">`).join('');
+  $('#wLen').textContent=d.length?'Length: '+d.length:''; $('#wLen').hidden=!d.length;
+  const key='yki:draft:'+id, ta=$('#wText'); let draft=''; try{ draft=localStorage.getItem(key)||''; }catch(e){}
+  ta.value=draft; drawCount();
+  ta.oninput=()=>{ try{ ta.value?localStorage.setItem(key,ta.value):localStorage.removeItem(key); }catch(e){} drawCount(); };
+  $('#wClear').onclick=()=>{ if(!ta.value) return; ta.value=''; ta.oninput(); ta.focus(); };
+  const models=d.models||[], list=$('#wModList'); list.innerHTML='';
+  if(models.length){
+    $('#wModels').hidden=false; $('#wModels').open=false; $('#wModSum').textContent=models.length>1?`Example answers (${models.length})`:'Example answer';
+    models.forEach(m=>{ const box=document.createElement('div'); box.className='wmodel';
+      if(m.level){ const l=document.createElement('div'); l.className='wlevel'; l.textContent=m.level; box.appendChild(l); }
+      const tx=document.createElement('div'); tx.className='wmtext'; (m.text||'').split(/\n\s*\n|\n/).map(x=>x.trim()).filter(Boolean).forEach(x=>para(tx,x)); box.appendChild(tx);
+      if(m.comment){ const c=document.createElement('div'); c.className='wcomment'; c.textContent=m.comment; box.appendChild(c); }
+      list.appendChild(box); });
+  }else{ $('#wModels').hidden=true; showNone('No example answer','The source gives this task without an example answer.',d.source); }
+  S.data={segments:segs}; S.seg=-1; S.word=-1; prefetch();
+}
+function drawCount(){
+  const n=countWords($('#wText').value), d=S.wd||{}, el=$('#wCount');
+  const range=d.minWords&&d.maxWords?` · target ${d.minWords}–${d.maxWords}`:d.minWords?` · at least ${d.minWords}`:d.maxWords?` · at most ${d.maxWords}`:'';
+  el.textContent=`${n} word${n===1?'':'s'}${range}`;
+  el.classList.toggle('ok',!!(d.minWords||d.maxWords)&&n>=(d.minWords||0)&&(!d.maxWords||n<=d.maxWords));
+  el.classList.toggle('over',!!d.maxWords&&n>d.maxWords);
+}
+
+/* ---------- hover / popover ---------- */
+let lastX=-1,lastY=-1,lastMove=0;
+document.addEventListener('mousemove',e=>{ if(e.clientX!==lastX||e.clientY!==lastY){ lastX=e.clientX; lastY=e.clientY; lastMove=performance.now(); } },{passive:true});
+const clickOnly=()=>S.mode==='reading';   // reading: translation only on click, so hovering does not give answers away
+function onEnter(span){
+  if(clickOnly()) return;
+  if(performance.now()-lastMove>400) return;   // the text moved under a resting cursor, not a real hover
+  clearTimeout(S.popTimer);
+  if(S.settings.pause && !audio.paused){ audio.pause(); S.wasPlaying=true; }
+  showPop(span);
+}
+function onTap(span){   // touch screens have no hover: a tap opens the word, a tap elsewhere closes it
+  clearTimeout(S.popTimer);
+  if(S.settings.pause && !audio.paused){ audio.pause(); S.wasPlaying=true; }
+  showPop(span);
+}
+document.addEventListener('click',e=>{ if('open' in $('#pop').dataset && !e.target.closest('#pop')) hidePop(); });
+function onLeave(){ if(clickOnly()) return; clearTimeout(S.popTimer); S.popTimer=setTimeout(()=>hidePop(),350); }
+$('#pop').addEventListener('mouseenter',()=>clearTimeout(S.popTimer));
+$('#pop').addEventListener('mouseleave',()=>{ if(clickOnly()) return; clearTimeout(S.popTimer); S.popTimer=setTimeout(()=>hidePop(),250); });
+function hidePop(noResume){
+  delete $('#pop').dataset.open; S.hoverKey=null; $$('.w.sel').forEach(x=>x.classList.remove('sel'));
+  if(S.wasPlaying && S.settings.resume && !noResume) audio.play();
+  S.wasPlaying=false;
+}
+async function showPop(span){
+  const k=span.dataset.k; S.hoverKey=k; const pop=$('#pop');
+  $$('.w.sel').forEach(x=>x.classList.remove('sel')); span.classList.add('sel');
+  const seg=S.data.segments[+span.dataset.i];
+  const display=span.textContent.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,'');
+  $('#popWord').textContent=display;
+  $('#popTr').textContent=S.tr[k]!==undefined?(S.tr[k]||'(no translation)'):'…';
+  $('#popCtx').textContent=seg?seg.text:'';
+  $('#popWik').href='https://en.wiktionary.org/wiki/'+encodeURIComponent(k)+'#Finnish';
+  const btn=$('#popSave'); const has=S.savedKeys.has(k);
+  btn.textContent=has?'Saved ✓':'Save word'; btn.disabled=has;
+  btn.onclick=()=>saveWord(k,display,seg);
+  // position under the word and scale out of it
+  const r=span.getBoundingClientRect(); if(!r.width && !r.height) return;   // word is not on screen (subtitles hidden)
+  pop.style.visibility='hidden'; pop.style.display='block';
+  const pw=pop.offsetWidth, ph=pop.offsetHeight; pop.style.display=''; pop.style.visibility='';
+  let left=Math.max(8,Math.min(r.left,innerWidth-pw-8)); let top=r.bottom+8; let above=false;
+  if(top+ph>innerHeight-8){ top=r.top-ph-8; above=true; }
+  pop.style.left=left+'px'; pop.style.top=top+'px';
+  pop.style.transformOrigin=`${Math.max(12,Math.min(pw-12,r.left+r.width/2-left))}px ${above?'100%':'0'}`;
+  pop.dataset.open='';
+  if(S.tr[k]===undefined){
+    try{ const res=await (await fetch('/api/translate?w='+encodeURIComponent(k))).json(); Object.assign(S.tr,res); }catch(e){ S.tr[k]=''; }
+    if(S.hoverKey===k) $('#popTr').textContent=S.tr[k]||'(no translation)';
+  }
+}
+async function prefetch(){
+  const keys=new Set(); for(const seg of S.data.segments) for(const w of ((seg.words&&seg.words.length)?seg.words:seg.text.split(/\s+/).map(x=>({w:x})))){ const k=keyOf(w.w); if(k && !/^[\d-]+$/.test(k) && S.tr[k]===undefined) keys.add(k); }
+  if(!keys.size) return;
+  try{ const res=await (await fetch('/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify([...keys])})).json(); Object.assign(S.tr,res); }catch(e){}
+}
+async function saveWord(k,display,seg){
+  const body={word:k,display,translation:S.tr[k]||'',context:seg?seg.text:'',source:S.id,time:seg?seg.start:0};
+  const e=await (await fetch('/api/words',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})).json();
+  if(!S.saved.some(x=>x.id===e.id)) S.saved.push(e);
+  S.savedKeys.add(k); $$('.w').forEach(x=>{ if(x.dataset.k===k) x.classList.add('saved'); });
+  $('#popSave').textContent='Saved ✓'; $('#popSave').disabled=true; updateCount();
+}
+function updateCount(){ $('#cnt').textContent=S.saved.length; $('#cnt2').textContent=S.saved.length; }
+
+/* ---------- questions ---------- */
+/* status note: says plainly when the source has no questions or no answers */
+function showNone(title,note,src){
+  const n=$('#qNone'); n.innerHTML=`<div><b>${esc(title)}</b>${esc(note||'')}${src?` <a href="${esc(src)}" target="_blank" rel="noopener">Source ↗</a>`:''}</div>`; n.hidden=false;
+}
+async function loadQuestions(it){
+  const box=$('#q'); box.hidden=true; S.q=null; $('#qList').innerHTML=''; $('#qIntro').textContent=''; $('#qScore').textContent=''; $('#qText').hidden=true; $('#qBar').hidden=true;
+  $('#qNone').hidden=true; $('#qWarn').hidden=true; S.qstatus=it.qstatus||null;
+  if(!it.hasQuestions){
+    const st=it.qstatus||{};
+    showNone(st.kind==='speaking'?'No questions: speaking task':'No questions or answers', st.note||'The source of this recording has no questions or answers.', st.source);
+    return;
+  }
+  let qj=null;
+  try{ const r=await fetch('/files/_app/questions/'+encodeURI(it.id)+'.json'); if(r.ok) qj=await r.json(); }catch(e){}
+  if(qj && qj.questions && qj.questions.length){ renderQuestions(qj); box.hidden=false; return; }
+  try{ const txt=await (await fetch('/files/'+encodeURI(it.id)+'.kysymykset.txt')).text(); $('#qText').textContent=txt; $('#qText').hidden=false; box.hidden=false; }catch(e){}
+}
+function renderQuestions(qj){
+  S.q=qj; $('#qIntro').textContent=qj.intro||''; $('#qScore').textContent='';
+  const closed=qj.questions.filter(q=>q.type!=='open'), keyed=closed.filter(q=>q.correct&&q.correct.length);
+  const opens=qj.questions.filter(q=>q.type==='open'), modeled=opens.filter(q=>q.model||(q.keywords&&q.keywords.length));
+  const warn=$('#qWarn'); warn.hidden=true;
+  if(keyed.length+modeled.length===0){ warn.innerHTML='<div><b>'+(S.speaking?'No model answer':'No answers available')+'</b>'+esc((S.qstatus&&S.qstatus.note)||'The source gives questions but no answers. Check yourself against the transcript.')+'</div>'; warn.hidden=false; }
+  else if(!S.speaking && (keyed.length<closed.length||modeled.length<opens.length)){ warn.innerHTML='<div><b>Some answers are missing</b>The source gives answers for only some questions.</div>'; warn.hidden=false; }
+  const list=$('#qList'); list.innerHTML=''; let checkable=false;
+  let group=null;
+  qj.questions.forEach((q,i)=>{
+    const g=(String(q.label||'').match(/^(Tehtävä \d+)\./)||[])[1];   // books with two exercises per recording
+    if(g && g!==group){ const h=document.createElement('div'); h.className='qgroup'; h.textContent=g; list.appendChild(h); group=g; }
+    const d=document.createElement('div'); d.className='qq'; d.dataset.i=i;
+    const t=document.createElement('div'); t.className='qt'; t.textContent=q.text; d.appendChild(t);
+    if(q.type==='open'){
+      const ta=document.createElement('textarea'); ta.rows=2; ta.placeholder='Your answer (not saved)'; d.appendChild(ta);
+      const model=[q.model, q.keywords&&q.keywords.length?'Keywords: '+q.keywords.join(', '):''].filter(Boolean).join('\n');
+      if(model){ const b=document.createElement('button'); b.className='btn small'; b.textContent='Show model answer';
+        const m=document.createElement('div'); m.className='qmodel'; m.hidden=true; m.textContent=model;
+        b.onclick=()=>{ m.hidden=!m.hidden; b.textContent=m.hidden?'Show model answer':'Hide model answer'; }; d.append(b,m); }
+      else if(modeled.length && !S.speaking){ const n=document.createElement('div'); n.className='qnone'; n.textContent='No model answer in the source.'; d.appendChild(n); }
+    }else{
+      if(q.correct&&q.correct.length) checkable=true;
+      const opts=document.createElement('div'); opts.className='qopts';
+      (q.options||[]).forEach((o,j)=>{ const L='ABCDEFGHIJ'[j]; const lab=document.createElement('label'); lab.className='qopt';
+        const ot=String(o).replace(/^\s*([A-J])[).]\s+/,(m,l)=>l===L?'':m);
+        lab.innerHTML=`<input type="radio" name="q${i}" value="${L}"><b>${L})</b><span>${esc(ot)}</span>`; opts.appendChild(lab); });
+      d.appendChild(opts); const fb=document.createElement('div'); fb.className='qfb'; d.appendChild(fb);
+    }
+    list.appendChild(d);
+  });
+  $('#qBar').hidden=!checkable;
+}
+function checkQuestions(){
+  if(!S.q) return; let right=0,total=0;
+  S.q.questions.forEach((q,i)=>{
+    if(q.type==='open') return;
+    const d=document.querySelector(`.qq[data-i="${i}"]`); const sel=d.querySelector('input:checked'); const fb=d.querySelector('.qfb');
+    const corr=(Array.isArray(q.correct)?q.correct:[q.correct]).filter(Boolean); d.classList.remove('right','wrong');
+    if(!corr.length){ fb.textContent='No answer in the source'; return; }
+    total++;
+    if(!sel){ fb.textContent='Not answered · correct: '+corr.join(', '); return; }
+    if(corr.includes(sel.value)){ right++; d.classList.add('right'); fb.textContent='Right'; }
+    else{ d.classList.add('wrong'); fb.textContent='Wrong · correct: '+corr.join(', '); }
+  });
+  $('#qScore').textContent=total?`${right} / ${total} right`:'';
+}
+$('#qCheck').onclick=checkQuestions;
+$('#qReset').onclick=()=>{ if(S.q) renderQuestions(S.q); };
+
+/* ---------- saved words ---------- */
+function renderWords(){
+  const body=$('#wordsBody');
+  if(!S.saved.length){ body.innerHTML='<div class="empty">No saved words yet. Hover a word and press “Save word”.</div>'; return; }
+  const rows=[...S.saved].reverse().map(x=>`<tr><td><b>${esc(x.display||x.word)}</b></td><td>${esc(x.translation)}</td><td class="ctx">${esc(x.context)}<br><small>${esc(x.source.split('/').pop())}${x.time?' · '+fmt(x.time):''}</small></td><td><button class="x" data-id="${x.id}" title="Remove">✕</button></td></tr>`).join('');
+  body.innerHTML=`<table><thead><tr><th>Word</th><th>Translation</th><th>Context</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+  body.querySelectorAll('.x').forEach(b=>b.onclick=async()=>{ await fetch('/api/words?id='+b.dataset.id,{method:'DELETE'});
+    const e=S.saved.find(x=>x.id===b.dataset.id); S.saved=S.saved.filter(x=>x.id!==b.dataset.id);
+    if(e){ S.savedKeys.delete(e.word); $$('.w').forEach(x=>{ if(x.dataset.k===e.word) x.classList.remove('saved'); }); }
+    updateCount(); renderWords(); });
+}
+const openModal=()=>{ hidePop(true); renderWords(); $('#modal').dataset.open=''; };
+const closeModal=()=>{ delete $('#modal').dataset.open; };
+$('#openWords').onclick=openModal; $('#closeModal').onclick=closeModal;
+$('#modal').addEventListener('click',e=>{ if(e.target.id==='modal') closeModal(); });
+$('#practice').onclick=()=>{
+  if(!S.saved.length) return; const body=$('#wordsBody'); let cur=null;
+  const draw=()=>{ cur=S.saved[Math.floor(Math.random()*S.saved.length)];
+    body.innerHTML=`<div class="card"><div class="big">${esc(cur.display||cur.word)}</div><div class="ans" id="pAns"></div><div class="ctx" id="pCtx"></div>
+      <p><button class="btn primary" id="pShow">Show</button> <button class="btn" id="pNext">Next</button> <button class="btn" id="pBack">Back to list</button></p></div>`;
+    $('#pShow').onclick=()=>{ $('#pAns').textContent=cur.translation||'(no translation)'; $('#pCtx').textContent=cur.context; };
+    $('#pNext').onclick=draw; $('#pBack').onclick=renderWords; };
+  draw();
+};
+
+/* ---------- settings ---------- */
+function applyVisibility(){
+  $$('#opts .chip').forEach(c=>{ c.setAttribute('aria-pressed',String(!!S.settings[c.dataset.opt])); c.disabled=!!c.dataset.needs && !S.settings[c.dataset.needs]; });
+  if(S.mode!=='listening') return;
+  $('#sub').hidden=!S.settings.subs; $('#next').hidden=!S.settings.subs; $('#lines').hidden=!S.settings.lines;
+}
+function bindSettings(){
+  $$('#opts .chip').forEach(c=>c.onclick=()=>{ const k=c.dataset.opt; S.settings[k]=!S.settings[k]; saveSettings(); applyVisibility();
+    if(k==='follow' && S.settings.follow){ const ln=document.querySelector('.line.now'); if(ln) ln.scrollIntoView({block:'center',behavior:'smooth'}); } });
+  applyVisibility(); applyRate();
+}
+
+/* ---------- keys: no animation on keyboard actions ---------- */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeModal(); closeDrawer(); hidePop(); return; }
+  if(e.target.matches('input,textarea,select')) return;
+  if(S.mode!=='listening') return;
+  if(e.code==='Space'){ e.preventDefault(); $('#pp').click(); }
+  else if(e.key==='ArrowLeft'){ skip(-5); }
+  else if(e.key==='ArrowRight'){ skip(5); }
+});
+init();
+</script>
+</body>
+</html>

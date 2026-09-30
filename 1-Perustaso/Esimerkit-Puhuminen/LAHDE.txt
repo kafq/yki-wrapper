@@ -1,0 +1,4 @@
+Lähde: YKI wrapper -repo. Alkuperäiset esimerkkitehtävät, kirjoitettu tätä repoa varten.
+Ääni: macOS:n tekstistä puheeksi -äänet (Satu, Reed). Litteraatti on käsikirjoitus, ei Whisper.
+Esimerkkivastaukset eivät ole virallisia YKI-arvioita.
+Lisenssi: sama kuin koodilla (MIT).

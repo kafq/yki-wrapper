@@ -1,0 +1,60 @@
+{
+ "title": "Keskustelu: kuntosali",
+ "intro": "Haluat liittyä kuntosalin jäseneksi. Soitat kuntosalin asiakaspalveluun. Kuulet asiakaspalvelijan puheenvuorot. Vastaa jokaisen puheenvuoron jälkeen, kun kuulet äänimerkin. Vihje ja puheaika ovat sulkeissa.",
+ "questions": [
+  {
+   "type": "open",
+   "label": "1",
+   "text": "Mikko: ***** SINÄ: [Esittele itsesi ja kerro asiasi.] (20 s)",
+   "options": [],
+   "correct": [],
+   "model": "Hei, täällä on Sara Ahmed. Haluaisin liittyä kuntosalinne jäseneksi. Voisitteko kertoa jäsenyyksistä?",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "2",
+   "text": "Mikko: ***** SINÄ: [Valitse vaihtoehto ja perustele.] (20 s)",
+   "options": [],
+   "correct": [],
+   "model": "Minua kiinnostaa vuosijäsenyys, koska aion käydä salilla säännöllisesti koko vuoden. Se on varmaan myös edullisempi.",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "3",
+   "text": "Mikko: ***** SINÄ: [Vastaa.] (20 s)",
+   "options": [],
+   "correct": [],
+   "model": "Olen käynyt kuntosalilla joskus aiemmin, mutta siitä on jo aikaa. Olisi kiva, jos joku näyttäisi, miten laitteita käytetään.",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "4",
+   "text": "Mikko: ***** SINÄ: [Kysy jotakin ryhmäliikunnasta.] (20 s)",
+   "options": [],
+   "correct": [],
+   "model": "Kyllä, kiitos. Mihin aikaan joogatunnit ovat, ja pitääkö niille ilmoittautua etukäteen?",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "5",
+   "text": "Mikko: ***** SINÄ: [Ehdota aikaa.] (15 s)",
+   "options": [],
+   "correct": [],
+   "model": "Sopisiko huomenna kello viisi iltapäivällä? Tulen suoraan töistä.",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "6",
+   "text": "Mikko: ***** SINÄ: [Kiitä ja lopeta puhelu.] (10 s)",
+   "options": [],
+   "correct": [],
+   "model": "Kiitos paljon avusta! Nähdään huomenna. Hei hei!",
+   "keywords": []
+  }
+ ]
+}

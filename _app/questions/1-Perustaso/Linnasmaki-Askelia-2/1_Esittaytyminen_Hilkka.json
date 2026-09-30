@@ -1,0 +1,60 @@
+{
+ "title": "",
+ "intro": "Tehtävä 1: Korjaa väärä sana\nKorjaa väärä sana oikeaksi. Väärä sana on alleviivattu (alkuperäisessä PDF:ssä; tekstimuodossa alleviivaus ei näy).\n\nTehtävä 2: Avoimet kysymykset\nKuuntele ja vastaa kysymyksiin.\n\nLuku 1 Esittäytyminen sisältää kirjassa kuusi henkilöä (Katariina, Mika, Janina, Hilkka, Sakari, Mira). Jokaisella on oma äänite ja omat tehtävät; tähän äänitteeseen on poimittu vain tämän henkilön kohdat.",
+ "questions": [
+  {
+   "type": "open",
+   "label": "Tehtävä 1.1",
+   "text": "Hilkka on 51-vuotias.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.2",
+   "text": "Hilkalla on kolme lasta ja viisi lastenlasta.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.3",
+   "text": "Hilkka asuu omakotitalossa.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.1",
+   "text": "Kuinka vanha Hilkka on?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.2",
+   "text": "Kuinka monta lastenlasta Hilkalla on?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.3",
+   "text": "Mitä Hilkka harrastaa?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  }
+ ]
+}

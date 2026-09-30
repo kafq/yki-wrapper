@@ -1,0 +1,18 @@
+{
+ "title": "Reklamaatio verkkokauppaan",
+ "kind": "virallinen viesti",
+ "task": "Tilasit verkkokaupasta takin, mutta paketti tuli viikon myöhässä ja takissa oli reikä. Kirjoita sähköposti verkkokaupan asiakaspalveluun. Kerro\n- mitä tilasit ja milloin\n- mikä tuotteessa ja toimituksessa oli vikana\n- mitä haluat verkkokaupan tekevän",
+ "length": "60–100 sanaa",
+ "minWords": 60,
+ "maxWords": 100,
+ "images": [],
+ "models": [
+  {
+   "level": "",
+   "text": "Hyvä asiakaspalvelu,\n\ntilasin verkkokaupastanne talvitakin 3. marraskuuta (tilausnumero 48213). Takin piti tulla viikossa, mutta paketti saapui vasta kahden viikon kuluttua. Kun avasin paketin, huomasin, että takin vasemmassa hihassa on reikä.\n\nTarvitsen takkia joka päivä työmatkalla. Pyydän, että lähetätte minulle uuden takin mahdollisimman pian. Jos samaa takkia ei ole varastossa, haluan rahani takaisin. Voinko palauttaa rikkinäisen takin maksutta?\n\nYstävällisin terveisin\nOlga Petrova",
+   "comment": "Written for this repo as an example. Not an official YKI rating."
+  }
+ ],
+ "source": "",
+ "sourceName": "Original examples (this repo)"
+}

@@ -1,0 +1,82 @@
+{
+ "title": "",
+ "intro": "Tehtävä 1: Oikein vai väärin\nOikein vai väärin?\n\nTehtävä 2: Korjaa väärä sana\nKorjaa väärä sana oikeaksi. Väärä sana on alleviivattu (alkuperäisessä PDF:ssä; tekstimuodossa alleviivaus ei näy).\n\nLuku 12 Säätiedotus sisältää kirjassa kaksi säätiedotusta (A ja B), joilla kummallakin on oma äänite ja omat tehtävät (oikein/väärin ja väärä sana). Tähän äänitteeseen on poimittu vain tämän säätiedotuksen kohdat.",
+ "questions": [
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.1",
+   "text": "Tänään on aurinkoista.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.2",
+   "text": "Päivän ylin lämpötila on 12–16 astetta.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.3",
+   "text": "Lapissa päivän ylin lämpötila on noin 10 astetta.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "tf",
+   "label": "Tehtävä 1.4",
+   "text": "Kovan tuulen varoitus on lännen ja lounaan välistä tuulta 14 metriä sekunnissa.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.1",
+   "text": "Tänään on aurinkoista.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.2",
+   "text": "Päivän ylin lämpötila on 6–8 astetta.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.3",
+   "text": "Lapissa päivän ylin lämpötila on noin 4 astetta.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 2.4",
+   "text": "Kovan tuulen varoitus on lännen ja lounaan välistä tuulta 40 metriä sekunnissa.",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  }
+ ]
+}

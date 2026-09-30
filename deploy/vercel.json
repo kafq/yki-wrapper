@@ -1,0 +1,7 @@
+{
+  "headers": [
+    { "source": "/files/(.*)", "headers": [{ "key": "Cache-Control", "value": "private, max-age=604800" }] },
+    { "source": "/data/(.*)", "headers": [{ "key": "Cache-Control", "value": "private, max-age=3600" }] },
+    { "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+  ]
+}

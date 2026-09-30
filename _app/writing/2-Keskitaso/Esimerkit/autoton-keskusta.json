@@ -1,0 +1,18 @@
+{
+ "title": "Autoton keskusta",
+ "kind": "mielipide",
+ "task": "Kaupunki suunnittelee, että keskustan pääkadulla ei saa enää ajaa autolla. Paikallislehti pyytää lukijoilta mielipiteitä. Kirjoita mielipidekirjoitus lehteen. Kerro\n- mitä mieltä olet suunnitelmasta\n- mitä hyviä ja huonoja puolia siinä on\n- mitä ehdotat kaupungille",
+ "length": "100–150 sanaa",
+ "minWords": 100,
+ "maxWords": 150,
+ "images": [],
+ "models": [
+  {
+   "level": "",
+   "text": "Autoton keskusta tekisi kaupungista viihtyisämmän\n\nLuin lehdestä, että kaupunki haluaa kieltää autot keskustan pääkadulta. Mielestäni suunnitelma on hyvä.\n\nAutoton katu olisi turvallisempi ja hiljaisempi. Lapsiperheet ja vanhukset voisivat liikkua rauhassa, ja kahviloilla olisi tilaa terasseille. Myös ilma puhdistuisi, kun pakokaasuja olisi vähemmän. Monissa Euroopan kaupungeissa kävelykadut ovat houkutelleet keskustaan lisää ihmisiä.\n\nSuunnitelmassa on kuitenkin myös ongelmia. Kaikki eivät pysty kävelemään pitkiä matkoja, ja kauppiaat pelkäävät, että asiakkaat siirtyvät kauppakeskuksiin.\n\nEhdotan, että kaupunki parantaa samalla bussiyhteyksiä keskustaan ja rakentaa pysäköintitalon lähelle pääkatua. Lisäksi liikuntarajoitteisten ja tavarakuljetusten pitäisi saada ajaa kadulla aamuisin. Toivon myös, että kaupunki kysyy asukkaiden mielipidettä ennen päätöstä. Näin keskustasta tulisi kaikille sopiva paikka.\n\nKaupunkilainen Ahmed K.",
+   "comment": "Written for this repo as an example. Not an official YKI rating."
+  }
+ ],
+ "source": "",
+ "sourceName": "Original examples (this repo)"
+}

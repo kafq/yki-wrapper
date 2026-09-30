@@ -1,0 +1,72 @@
+{
+ "title": "Viesti työkaverilta",
+ "source": "",
+ "sourceName": "Original examples (this repo)",
+ "intro": "Lue viesti. Valitse oikea vaihtoehto tai vastaa lyhyesti.",
+ "text": "Moi Ahmed!\n\nKiitos, että voit tehdä huomenna minun vuoroni. Lapseni on kipeänä, ja minun täytyy jäädä kotiin.\n\nVuoro alkaa kello 7 ja loppuu kello 15. Aamulla tulee iso tavarakuorma, joten ole ajoissa paikalla. Avaimet ovat toimiston pöydän laatikossa. Muista myös tarkistaa kylmähuoneen lämpötila kaksi kertaa päivässä ja kirjoittaa se vihkoon.\n\nVoin tehdä sinun vuorosi ensi viikon perjantaina, jos se sopii sinulle.\n\nTerveisin\nLeena",
+ "questions": [
+  {
+   "type": "mc",
+   "label": "M1",
+   "text": "M1. Miksi Leena ei voi mennä töihin?",
+   "options": [
+    "Hän on itse sairas.",
+    "Hänen lapsensa on sairas.",
+    "Hän on lomalla."
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "mc",
+   "label": "M2",
+   "text": "M2. Mihin aikaan vuoro alkaa?",
+   "options": [
+    "kello 7",
+    "kello 8",
+    "kello 15"
+   ],
+   "correct": [
+    "A"
+   ]
+  },
+  {
+   "type": "mc",
+   "label": "M3",
+   "text": "M3. Miksi Ahmedin pitää olla ajoissa?",
+   "options": [
+    "Kokous alkaa aamulla.",
+    "Aamulla tulee tavaraa.",
+    "Toimisto avataan aikaisin."
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "open",
+   "label": "A1",
+   "text": "A1. Mitä Ahmedin pitää tehdä kaksi kertaa päivässä?",
+   "options": [],
+   "correct": [],
+   "model": "Tarkistaa kylmähuoneen lämpötila ja kirjoittaa se vihkoon.",
+   "keywords": [
+    "lämpötila",
+    "vihko"
+   ]
+  },
+  {
+   "type": "open",
+   "label": "A2",
+   "text": "A2. Mitä Leena lupaa Ahmedille?",
+   "options": [],
+   "correct": [],
+   "model": "Hän voi tehdä Ahmedin vuoron ensi viikon perjantaina.",
+   "keywords": [
+    "perjantai",
+    "vuoro"
+   ]
+  }
+ ]
+}

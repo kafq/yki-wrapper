@@ -1,0 +1,30 @@
+Transkripti: 3_Asuntonaytossa.mp3 (kesto 01:34)
+Tehty automaattisesti Whisper-mallilla (mlx-community/whisper-large-v3-turbo). Voi sisältää virheitä.
+
+--- Teksti ---
+Hei! Hei! Tervetuloa, Aki Nieminen. Elina Ahonen. Tämä on tosiaan tällainen kaksio 45 neljätä. Sauna ja parveke löytyy. Ja vuokra on 550 euroa kuussa. Näyttää kivalta, mutta keitti on tosi pieni. Maksaako vesi ja sähkö erikseen? Vesimaksu on 18 euroa kuussa yhdeltä henkilöltä. Sähkö laskutetaan kulutuksen mukaan. Nettiyhteys kuuluu vuokraan. Tosi hyvä. Milloin tämä vapautuu? Tämä on vapaa huhtikuun alusta, eli ensimmäinen päivä huhtikuuta voi muuttaa. Kuinka suuri takuvuokra tässä on? Takuvuokra on kahden kuukauden vuokra, eli yhteensä 1100 euroa. Sen saat sitten tietysti takaisin, kun vuokrasuhde päättyy. Siis jos asunnossa on kaikki kunnossa. Joo, totta kai. Se ei ole ongelma. Mutta vielä tärkeä kysymys. Saako koira myös muuttaa? Saa toki. Meillä ei ole mitään rajoituksia eläinten suhteen. Loistavaa. Kyllä mä haluaisin vuokrata tämän. Onko vuokrasopimus määräaikainen vai toistaiseksi voimassa oleva? Me voidaan tehdä ihan toistaiseksi voimassa oleva sopimus. Silloin irtisanomisaika on sinun puoleltasi yksi kokonainen kalenterikuukausi. Kuulostaa hyvältä. Kirjoitetaan vuokrasopimus.
+
+--- Aikaleimat ---
+[00:03] Hei!
+[00:04] Hei! Tervetuloa, Aki Nieminen.
+[00:08] Elina Ahonen.
+[00:10] Tämä on tosiaan tällainen kaksio 45 neljätä.
+[00:14] Sauna ja parveke löytyy.
+[00:17] Ja vuokra on 550 euroa kuussa.
+[00:21] Näyttää kivalta, mutta keitti on tosi pieni.
+[00:25] Maksaako vesi ja sähkö erikseen?
+[00:28] Vesimaksu on 18 euroa kuussa yhdeltä henkilöltä. Sähkö laskutetaan kulutuksen mukaan. Nettiyhteys kuuluu vuokraan.
+[00:37] Tosi hyvä. Milloin tämä vapautuu?
+[00:40] Tämä on vapaa huhtikuun alusta, eli ensimmäinen päivä huhtikuuta voi muuttaa.
+[00:46] Kuinka suuri takuvuokra tässä on?
+[00:49] Takuvuokra on kahden kuukauden vuokra, eli yhteensä 1100 euroa.
+[00:54] Sen saat sitten tietysti takaisin, kun vuokrasuhde päättyy.
+[00:58] Siis jos asunnossa on kaikki kunnossa.
+[01:00] Joo, totta kai. Se ei ole ongelma.
+[01:03] Mutta vielä tärkeä kysymys. Saako koira myös muuttaa?
+[01:08] Saa toki. Meillä ei ole mitään rajoituksia eläinten suhteen.
+[01:12] Loistavaa. Kyllä mä haluaisin vuokrata tämän.
+[01:15] Onko vuokrasopimus määräaikainen vai toistaiseksi voimassa oleva?
+[01:21] Me voidaan tehdä ihan toistaiseksi voimassa oleva sopimus.
+[01:25] Silloin irtisanomisaika on sinun puoleltasi yksi kokonainen kalenterikuukausi.
+[01:29] Kuulostaa hyvältä. Kirjoitetaan vuokrasopimus.

@@ -1,0 +1,13 @@
+Transkripti: 12_Saatiedotus_A.mp3 (kesto 00:37)
+Tehty automaattisesti Whisper-mallilla (mlx-community/whisper-large-v3-turbo). Voi sisältää virheitä.
+
+--- Teksti ---
+Pilvissuus on tanhap. Tänään vaihtelevaa ja paikoin tulee sadekuuroja idässä ja pohjois-pohjanmaalla yleisemmin. Aluksi on paikoin myös sumua. Päivän ylin lämpötila on enimmäkseen 12-16 astetta, Lapissa 10. Pilvisyys Kovan tuulen varoitus Selkämeren eteläosaan lännen ja lounaan välistä tuulta 14 metriä sekunnissa.
+
+--- Aikaleimat ---
+[00:13] Pilvissuus on tanhap.
+[00:14] Tänään vaihtelevaa ja paikoin tulee sadekuuroja idässä ja pohjois-pohjanmaalla yleisemmin.
+[00:20] Aluksi on paikoin myös sumua.
+[00:22] Päivän ylin lämpötila on enimmäkseen 12-16 astetta, Lapissa 10.
+[00:28] Pilvisyys
+[00:30] Kovan tuulen varoitus Selkämeren eteläosaan lännen ja lounaan välistä tuulta 14 metriä sekunnissa.

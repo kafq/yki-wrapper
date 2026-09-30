@@ -1,0 +1,95 @@
+{
+ "title": "Kirjasto on kaupungin olohuone",
+ "source": "",
+ "sourceName": "Original examples (this repo)",
+ "intro": "Lue teksti. Onko väite oikein vai väärin? Valitse oikea vaihtoehto. Vastaa avoimiin kysymyksiin lyhyesti omin sanoin.",
+ "text": "Suomalaiset lainaavat kirjastoista vuosittain kymmeniä miljoonia kirjoja. Kirjasto ei kuitenkaan ole enää pelkkä paikka, josta haetaan luettavaa. Monessa kaupungissa kirjastoa kutsutaan kaupungin olohuoneeksi.\n\nJärvelän uusi pääkirjasto avattiin viime vuonna. Siellä voi lukea lehtiä, mutta myös ommella ompelukoneella, tulostaa 3D-tulostimella tai soittaa musiikkia äänitysstudiossa. Kaikki tämä on ilmaista. Kirjastonhoitaja Anna Virtanen kertoo, että moni asiakas tulee kirjastoon ensimmäistä kertaa juuri näiden palveluiden takia. – Osa heistä lainaa sitten myös kirjan, ja se ilahduttaa meitä, hän sanoo.\n\nKirjasto on tärkeä myös maahanmuuttajille. Järvelässä järjestetään joka viikko kielikahvila, jossa voi harjoitella suomea vapaaehtoisten kanssa. Kirjastosta saa myös apua digiasioissa, esimerkiksi verkkopankin tai Kelan palvelujen käytössä.\n\nKaikki eivät ole muutoksesta iloisia. Osa asiakkaista kaipaa hiljaisuutta, jota ennen pidettiin kirjaston tärkeimpänä sääntönä. Siksi uudessa kirjastossa on erillinen hiljainen lukusali.\n\nKirjastojen määrärahat riippuvat kuntien taloudesta. Virtasen mielestä kirjastoon kannattaa silti panostaa. – Kirjasto on yksi harvoista paikoista, joihin kuka tahansa voi tulla maksamatta mitään. Sellaisia paikkoja tarvitaan, hän sanoo.",
+ "questions": [
+  {
+   "type": "tf",
+   "label": "M1",
+   "text": "M1. Kirjastossa voi nykyään tehdä muutakin kuin lainata kirjoja.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "A"
+   ]
+  },
+  {
+   "type": "tf",
+   "label": "M2",
+   "text": "M2. Ompelukoneen käyttö maksaa vähän.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "tf",
+   "label": "M3",
+   "text": "M3. Kaikki asiakkaat pitävät muutoksesta.",
+   "options": [
+    "Oikein",
+    "Väärin"
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "mc",
+   "label": "M4",
+   "text": "M4. Miksi uudessa kirjastossa on hiljainen lukusali?",
+   "options": [
+    "Koska lapset tarvitsevat oman tilan.",
+    "Koska osa asiakkaista haluaa lukea rauhassa.",
+    "Koska kielikahvila on siellä."
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "mc",
+   "label": "M5",
+   "text": "M5. Mistä kirjastojen rahoitus riippuu?",
+   "options": [
+    "valtion päätöksistä",
+    "kuntien taloudesta",
+    "asiakkaiden määrästä"
+   ],
+   "correct": [
+    "B"
+   ]
+  },
+  {
+   "type": "open",
+   "label": "A1",
+   "text": "A1. Miten kirjasto auttaa maahanmuuttajia? Mainitse kaksi asiaa.",
+   "options": [],
+   "correct": [],
+   "model": "Kirjastossa on kielikahvila, jossa voi harjoitella suomea, ja sieltä saa apua digiasioissa.",
+   "keywords": [
+    "kielikahvila",
+    "digi"
+   ]
+  },
+  {
+   "type": "open",
+   "label": "A2",
+   "text": "A2. Miksi Virtasen mielestä kirjastoja tarvitaan?",
+   "options": [],
+   "correct": [],
+   "model": "Koska sinne voi tulla kuka tahansa maksamatta mitään.",
+   "keywords": [
+    "maksamatta",
+    "ilmai"
+   ]
+  }
+ ]
+}

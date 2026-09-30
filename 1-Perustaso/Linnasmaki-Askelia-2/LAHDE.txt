@@ -1,0 +1,5 @@
+Lähde: https://linnas.fi/opiston-tuottamaa-oppimateriaalia/askelia-aktiivisuuteen-2/
+Askelia aktiivisuuteen 2. Mari Ruohonen, Turun kristillinen opisto 2015. Rahoitettu Opetushallituksen tuella.
+Kirjan esipuheesta: "Hankkeessa tuotettuja äänitiedostoja voi vapaasti käyttää myös ilman tehtäviä."
+Tässä repossa: 5 äänitettä (1, 3, 5, 7, 12 A) ja niiden tehtävät kirjasta. Kirja ei anna vastauksia.
+Litteraatit: tehty automaattisesti Whisperillä, voivat sisältää virheitä.

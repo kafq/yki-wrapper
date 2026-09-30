@@ -1,0 +1,60 @@
+{
+ "title": "",
+ "intro": "Tehtävä 1: Täydennä numero\nKuuntele automaattivastaaja ja täydennä oikea numero.",
+ "questions": [
+  {
+   "type": "open",
+   "label": "Tehtävä 1.1",
+   "text": "Minkä numeron valitset, jos haluat palvelua suomeksi?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.2",
+   "text": "Minkä numeron valitset, jos haluat kysyä tv-palveluista?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.3",
+   "text": "Minkä numeron valitset, jos haluat puhua laajakaistasta?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.4",
+   "text": "Minkä numeron valitset, jos puhelimesi on kadonnut tai varastettu?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.5",
+   "text": "Minkä numeron valitset, jos sinulla on kuuluvuusongelma?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  },
+  {
+   "type": "open",
+   "label": "Tehtävä 1.6",
+   "text": "Minkä numeron valitset, jos haluat aktivoida liittymän?",
+   "options": [],
+   "correct": [],
+   "model": "",
+   "keywords": []
+  }
+ ]
+}
